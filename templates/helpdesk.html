@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Helpdesk Dashboard - AI Infrastructure Copilot</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --surface-color: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #6366f1;
+            --accent-primary-hover: #4f46e5;
+            --accent-secondary: #06b6d4;
+            --glow-color: rgba(99, 102, 241, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Decorative background glows */
+        .bg-glow-1 {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(99, 102, 241, 0) 70%);
+            z-index: -1;
+            filter: blur(80px);
+        }
+
+        /* Glassmorphic navbar */
+        .navbar-custom {
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand-custom {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand-custom:hover {
+            color: #a5b4fc;
+        }
+
+        /* Page title */
+        .page-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 2.25rem;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Glassmorphic card */
+        .glass-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            height: 100%;
+        }
+
+        /* Custom form controls */
+        .form-label-custom {
+            font-weight: 600;
+            color: #a5b4fc;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-control-custom {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            padding: 0.8rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-custom:focus {
+            background: rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+            color: #ffffff;
+        }
+
+        .form-control-custom::placeholder {
+            color: #475569;
+        }
+
+        /* Custom buttons */
+        .btn-custom {
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, #4f46e5 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+            color: #ffffff;
+        }
+
+        .btn-secondary-custom {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary-custom:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Priority / Severity Badges */
+        .badge-priority {
+            font-weight: 600;
+            padding: 0.35em 0.8em;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        .badge-critical {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-high {
+            background-color: rgba(249, 115, 22, 0.15);
+            color: #fb923c;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .badge-medium {
+            background-color: rgba(234, 179, 8, 0.15);
+            color: #facc15;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .badge-low {
+            background-color: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .badge-status-open {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* Resolution content box */
+        .pre-box {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            color: #cbd5e1;
+            font-family: inherit;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-text {
+            color: #475569;
+            font-size: 0.875rem;
+            margin-top: auto;
+            padding: 2rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow-1"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-dark mb-5">
+        <div class="container">
+            <a class="navbar-brand-custom" href="{{ url_for('home') }}">
+                <i class="bi bi-cpu-fill text-indigo-400"></i>
+                <span>AI Infrastructure Copilot</span>
+            </a>
+            <a href="{{ url_for('home') }}" class="btn-custom btn-secondary-custom py-2 px-3 text-sm">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container py-3">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="page-title">IT Helpdesk & Incident Portal</h1>
+                <p class="text-secondary">Submit incident issues to automatically query database systems, build resolution recommendations, and construct structured tracking tickets.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Side: Submission Form -->
+            <div class="col-lg-5">
+                <div class="glass-card">
+                    <h3 class="h5 mb-4 font-weight-bold" style="font-family: 'Outfit', sans-serif;"><i class="bi bi-pencil-square me-2 text-primary"></i>File an Issue</h3>
+                    
+                    <form action="{{ url_for('helpdesk') }}" method="POST">
+                        <div class="mb-4">
+                            <label for="issue" class="form-label-custom">
+                                Describe the Issue
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-custom" 
+                                id="issue" 
+                                name="issue" 
+                                placeholder="e.g. VPN not connecting or Database latency high..." 
+                                required>
+                        </div>
+                        
+                        <button type="submit" class="btn-custom btn-primary-custom w-100 justify-content-center">
+                            <i class="bi bi-ticket-detailed-fill"></i>
+                            Generate Ticket
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Side: Display Results dynamically -->
+            <div class="col-lg-7">
+                
+                <!-- 1. Ticket Result Card -->
+                {% if ticket %}
+                <div class="glass-card mb-4 border-indigo-500">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="h5 m-0 font-weight-bold" style="font-family: 'Outfit', sans-serif;">
+                            <i class="bi bi-ticket-perforated-fill me-2 text-indigo-400"></i>Support Ticket Generated
+                        </h3>
+                        <span class="badge-priority badge-status-open">Status: {{ ticket.status }}</span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="section-label">Ticket ID</div>
+                            <div class="value-text font-monospace text-indigo-300">{{ ticket.ticket_id }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="section-label">Priority Level</div>
+                            <div class="value-text">
+                                {% set p_lower = ticket.priority | lower %}
+                                {% if 'crit' in p_lower %}
+                                    <span class="badge-priority badge-critical"><i class="bi bi-exclamation-octagon-fill me-1"></i>{{ ticket.priority }}</span>
+                                {% elif 'high' in p_lower %}
+                                    <span class="badge-priority badge-high"><i class="bi bi-exclamation-triangle-fill me-1"></i>{{ ticket.priority }}</span>
+                                {% elif 'med' in p_lower %}
+                                    <span class="badge-priority badge-medium"><i class="bi bi-exclamation-circle-fill me-1"></i>{{ ticket.priority }}</span>
+                                {% else %}
+                                    <span class="badge-priority badge-low"><i class="bi bi-info-circle-fill me-1"></i>{{ ticket.priority }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="section-label">Associated Issue</div>
+                        <div class="value-text">{{ ticket.issue }}</div>
+                    </div>
+
+                    <div>
+                        <div class="section-label">Proposed Resolution</div>
+                        <div class="pre-box">{{ ticket.resolution }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- 2. Incident Analysis Result Card -->
+                {% set active_analysis = analysis or analysis_result %}
+                {% if active_analysis %}
+                <div class="glass-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="h5 m-0 font-weight-bold" style="font-family: 'Outfit', sans-serif;">
+                            <i class="bi bi-shield-slash-fill me-2 text-danger"></i>Log Analysis Result
+                        </h3>
+                        <div>
+                            {% set s_lower = (active_analysis.severity or active_analysis.priority or '') | lower %}
+                            {% if 'crit' in s_lower %}
+                                <span class="badge-priority badge-critical"><i class="bi bi-exclamation-octagon-fill me-1"></i>{{ active_analysis.severity or active_analysis.priority }}</span>
+                            {% elif 'high' in s_lower %}
+                                <span class="badge-priority badge-high"><i class="bi bi-exclamation-triangle-fill me-1"></i>{{ active_analysis.severity or active_analysis.priority }}</span>
+                            {% elif 'med' in s_lower %}
+                                <span class="badge-priority badge-medium"><i class="bi bi-exclamation-circle-fill me-1"></i>{{ active_analysis.severity or active_analysis.priority }}</span>
+                            {% else %}
+                                <span class="badge-priority badge-low"><i class="bi bi-info-circle-fill me-1"></i>{{ active_analysis.severity or active_analysis.priority }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="section-label">Identified Issue</div>
+                        <div class="value-text text-light font-weight-bold">{{ active_analysis.issue }}</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="section-label">Identified Root Cause</div>
+                        <div class="value-text">{{ active_analysis.root_cause }}</div>
+                    </div>
+
+                    <div>
+                        <div class="section-label">Proposed Resolution Action</div>
+                        <div class="pre-box">{{ active_analysis.resolution }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Fallback prompt when no results are active -->
+                {% if not ticket and not active_analysis %}
+                <div class="glass-card d-flex flex-column align-items-center justify-content-center text-center p-5 opacity-75" style="border-style: dashed;">
+                    <i class="bi bi-cpu fs-1 text-secondary mb-3"></i>
+                    <h4 class="h6 font-weight-bold text-light mb-1">Awaiting Incident Data</h4>
+                    <p class="small text-secondary m-0">Submit a support ticket on the left or upload logs to view detailed analysis results here.</p>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-text">
+        Powered by advanced AI Agents &bull; Secure &amp; Automated
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

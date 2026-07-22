@@ -1,0 +1,4 @@
+# Project dependencies
+flask
+google-generativeai
+python-dotenv
