@@ -1,6 +1,18 @@
 # 🚀 AI Infrastructure Copilot
 
 > AI-powered Infrastructure Monitoring & IT Helpdesk Automation Platform built using Flask, Gemini AI, and SQLite.
+>
+> ## 🎬 Demo
+
+The AI Infrastructure Copilot enables users to:
+
+- 📂 Upload infrastructure log files
+- 🤖 Analyze logs using Google Gemini AI
+- 🚨 Detect incidents and classify severity
+- 🔍 Perform root cause analysis
+- 🎫 Generate intelligent IT helpdesk tickets
+- 💾 Store incidents and tickets in an SQLite database
+- 🌐 Access everything through a modern Flask web interface
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue)
 ![Flask](https://img.shields.io/badge/Flask-Web_App-black)
