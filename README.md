@@ -167,7 +167,7 @@ http://127.0.0.1:5000
 **Partho Roy**
 
 - GitHub: https://github.com/ParthoRoy07
-- LinkedIn: *(Add your LinkedIn profile)*
+- LinkedIn: https://www.linkedin.com/in/partho-roy-kiit/)
 
 ---
 
