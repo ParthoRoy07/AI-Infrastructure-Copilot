@@ -130,18 +130,21 @@ http://127.0.0.1:5000
 
 ## 📸 Screenshots
 
-### Home Page
+### 🏠 Home Page
 
-(Add Screenshot)
+![Home](home.png)
 
-### Log Analysis
+---
 
-(Add Screenshot)
+### 📊 Log Analysis
 
-### Helpdesk Portal
+![Log Analysis](upload.png)
 
-(Add Screenshot)
+---
 
+### 🎫 Helpdesk Portal
+
+![Helpdesk](helpdesk.png)
 ### Dashboard (Coming Soon)
 
 ---
